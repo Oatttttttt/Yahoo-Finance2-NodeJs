@@ -1,0 +1,85 @@
+openapi: 3.0.0
+info:
+  title: Thai Stocks API From Yahoo Finance-2
+  description: |
+    This API provides access to Thai stocks data from Yahoo Finance.
+    For more information, visit [Yahoo Finance](https://finance.yahoo.com).
+  version: 0.1.9
+servers:
+  - url: http://localhost:3001
+    description: Local development server
+  - url: http://staging-api.example.com
+    description: Staging server for testing
+paths:
+  /stock/search/{query}:
+    get:
+      summary: Search stocks by query
+      description: Returns stock information based on the provided query.
+      parameters:
+        - name: query
+          in: path
+          required: true
+          description: The search query.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/StockInfo'
+  /stock/{symbol}:
+    get:
+      summary: Get stock information by symbol
+      description: Returns information about a specific stock based on its symbol.
+      parameters:
+        - name: symbol
+          in: path
+          required: true
+          description: The stock symbol.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StockInfo'
+  /stock/chart/{symbol}:
+    get:
+      summary: Get stock chart data by symbol
+      description: Returns chart data for a specific stock based on its symbol.
+      parameters:
+        - name: symbol
+          in: path
+          required: true
+          description: The stock symbol.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  chartData:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ChartData'
+
+components:
+  schemas:
+    StockInfo:
+      type: object
+      properties:
+        // Define properties for stock information here
+    ChartData:
+      type: object
+      properties:
+        // Define properties for chart data here
